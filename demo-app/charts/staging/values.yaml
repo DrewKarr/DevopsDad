@@ -1,0 +1,6 @@
+image:
+  tag: 0.0.1
+ingress:
+  host: staging.demo-app.example.com
+hpa:
+  minReplicas: 2

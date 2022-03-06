@@ -1,0 +1,6 @@
+*mongodb*
+*requirements.lock
+*charts/*
+*.tgz
+terraform.tfstate*
+*account.json*

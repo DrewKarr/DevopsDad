@@ -1,0 +1,10 @@
+image:
+  tag: latest
+  pullPolicy: Always 
+hpa:
+  enabled: false
+demo-app-db:
+  replicaSet:
+    enabled: false
+  persistence:
+    enabled: false
