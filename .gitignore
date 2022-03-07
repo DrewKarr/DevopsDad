@@ -4,3 +4,6 @@
 *.tgz
 terraform.tfstate*
 *account.json*
+.terraform*
+/bin
+*DS_*

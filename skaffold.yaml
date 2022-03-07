@@ -1,0 +1,30 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+metadata:
+  name: demo-app
+build:
+  cluster:
+    namespace: preview
+    dockerConfig:
+      path: ~/.docker/config.json
+  artifacts:
+  - image: demo-app
+    kaniko: {}
+deploy:
+  kubectl:
+    manifests:
+    - k8s/*.yaml
+profiles:
+- name: preview-remote
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "{{.IMAGE_NAME}}:{{.preview_USER}}"
+- name: preview-local
+  build:
+    local: {}
+    artifacts:
+    - docker: {}
+      image: demo-app
+    tagPolicy:
+      sha256: {}

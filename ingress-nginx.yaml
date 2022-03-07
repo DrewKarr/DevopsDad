@@ -326,7 +326,7 @@ spec:
       containers:
         - name: controller
           image: k8s.gcr.io/ingress-nginx/controller:v1.1.0@sha256:f766669fdcf3dc26347ed273a55e754b427eb4411ee075a53f30718b4499076a
-          imagePullPolicy: IfNotPresent
+          imagePullPoAlways
           lifecycle:
             preStop:
               exec:
@@ -608,7 +608,7 @@ spec:
       containers:
         - name: create
           image: k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1@sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           args:
             - create
             - --host=ingress-nginx-controller-admission,ingress-nginx-controller-admission.$(POD_NAMESPACE).svc
@@ -660,7 +660,7 @@ spec:
       containers:
         - name: patch
           image: k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1@sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           args:
             - patch
             - --webhook-name=ingress-nginx-admission

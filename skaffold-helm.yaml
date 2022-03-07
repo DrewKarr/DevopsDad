@@ -1,0 +1,59 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+metadata:
+  name: demo-app
+build:
+  cluster:
+    namespace: preview
+    dockerConfig:
+      path: ~/.docker/config.json
+  artifacts:
+  - image: demo-app
+    kaniko: {}
+deploy:
+  helm:
+    releases:
+      - name: demo-app
+        chartPath: charts/demo-app
+        wait: true
+    flags:
+      upgrade:
+        - --install
+profiles:
+- name: preview-remote
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "{{.IMAGE_NAME}}:{{.GH_USER}}"
+  deploy:
+    helm:
+      releases:
+        - name: demo-app
+          chartPath: charts/demo-app
+          wait: true
+          valuesFiles:
+          - charts/preview/values.yaml
+      flags:
+        upgrade:
+          - --install
+- name: preview-local
+  build:
+    local: {}
+    artifacts:
+    - docker: {}
+      image: demo-app
+    tagPolicy:
+      sha256: {}
+  deploy:
+    helm:
+      releases:
+        - name: demo-app
+          chartPath: charts/demo-app
+          wait: true
+          valuesFiles:
+          - charts/preview/values.yaml
+          setValueTemplates:
+            ingress.host: {{.ADDRESS}}
+      flags:
+        upgrade:
+          - --install

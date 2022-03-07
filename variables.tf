@@ -15,7 +15,6 @@ variable "cluster_name" {
 
 variable "k8s_version" {
   type = string
-  default = "1.22.6-gke.1000"
 }
 
 variable "min_node_count" {
@@ -40,5 +39,5 @@ variable "preemptible" {
 
 variable "state_bucket" {
   type    = string
-  default = state
+  default = "state"
 }
